@@ -1,0 +1,130 @@
+<h2>数据库设计 — 模块化拆分</h2>
+<p class="subtitle">核心原则：共享数据集中管理，各模块独立建表，通过 ID 松耦合</p>
+
+<div class="section">
+  <h3>一、共享数据库（shared/）</h3>
+  <p class="subtitle">所有模块共用的基础数据，统一放在 shared/models.py 中</p>
+
+  <pre style="background: var(--card-bg); padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.6;">
+<b>subjects</b>              # 科目表（语文/数学/英语）
+├── id, name, icon, created_at
+
+<b>knowledge_points</b>      # 知识点树（树形结构）
+├── id, subject_id, name, parent_id, level, sort_order
+├── 示例: "数学 > 数与代数 > 四则运算 > 两位数乘法"
+
+<b>users</b>                  # 用户表（家长和孩子共用）
+├── id, role(家长/孩子), nickname, avatar
+
+<b>class_schedule</b>         # 年级/学期配置
+├── id, grade, semester, is_current</pre>
+</div>
+
+<div class="section">
+  <h3>二、录入模块（modules/upload + modules/ocr）</h3>
+
+  <pre style="background: var(--card-bg); padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.6;">
+<b>upload_sessions</b>        # 每次录入会话
+├── id, user_id, subject_id, source_type(拍照/文件), status, created_at
+
+<b>source_files</b>           # 原始文件（图片/PDF/Word）
+├── id, session_id, file_name, file_path, file_type, page_count
+
+<b>ocr_results</b>            # OCR 识别结果
+├── id, source_file_id, page_number, raw_text, structured_data
+├── status(pending/done/failed), confidence, processing_time
+
+<b>ai_corrections</b>         # AI 判错结果
+├── id, ocr_result_id, question_number, student_answer
+├── is_correct, correct_answer, error_type, ai_analysis</pre>
+</div>
+
+<div class="section">
+  <h3>三、题库模块（modules/question）— 核心数据</h3>
+
+  <pre style="background: var(--card-bg); padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.6;">
+<b>questions</b>               # 题目主表（核心）
+├── id, subject_id, knowledge_point_id
+├── question_type(选择/填空/计算/应用/作文/…)
+├── content(题目内容JSON), answer(标准答案)
+├── difficulty(1-5), source_file_id, source_page
+├── tags(自定义标签), status, created_at
+
+<b>mistake_records</b>         # 错题记录（核心）
+├── id, question_id, student_answer, is_correct
+├── error_type(粗心/概念不清/审题/计算/…)
+├── ai_error_analysis(JSON), corrected_count, last_wrong_at
+
+<b=>question_images</b>        # 题目图片资源
+├── id, question_id, image_type(原题/批注/正解), image_path</pre>
+</div>
+
+<div class="section">
+  <h3>四、出题模块（modules/generate）</h3>
+
+  <pre style="background: var(--card-bg); padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.6;">
+<b>similar_questions</b>       # 相似题
+├── id, original_question_id, similar_question_id
+├── similarity_type(同知识点/同题型/同难度)
+├── ai_generated, created_at
+
+<b>exam_papers</b>             # 模拟试卷
+├── id, user_id, subject_id, title, question_ids(JSON)
+├── total_score, difficulty, duration_minutes, status, created_at
+
+<b>practice_results</b>        # 做题记录
+├── id, question_id, student_answer, is_correct
+├── source(exam_paper_id 或 similar_question_id)
+├── time_spent, created_at</pre>
+</div>
+
+<div class="section">
+  <h3>五、分析模块（modules/analysis）</h3>
+
+  <pre style="background: var(--card-bg); padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.6;">
+<b>error_analysis</b>          # 出错点分析报告
+├── id, user_id, subject_id, report_date
+├── weak_knowledge_points(JSON), error_distribution(JSON)
+├── trend_data(JSON), suggestions(JSON)
+
+<b>study_reports</b>           # 学习周报/月报
+├── id, user_id, report_type(weekly/monthly)
+├── summary(JSON), generated_at</pre>
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+<h3>核心关联关系</h3>
+
+<p>模块间不直接访问对方表，通过 <strong>ID 引用</strong> 松耦合：</p>
+<pre style="background: var(--card-bg); padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.6;">
+upload → question:     upload_session  →  questions (通过 source_file_id 关联)
+                             不需要 upload 模块知道 question 表的内部结构
+
+question → generate:   questions       →  exam_papers.question_ids (JSON 存 ID 列表)
+                             出题模块只读 ID 列表，不直接操作 question 表
+
+question → analysis:   mistake_records →  error_analysis (通过 user_id + subject_id 聚合)
+                             分析模块自己做聚合计算，不需要依赖 question 模块的内部逻辑</pre>
+
+<div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin: 24px 0;">
+  <h3>✅ 这个数据库设计你看 OK 吗？</h3>
+  <p>后续每个模块的字段可以再细化，先确认整体结构方向。有没有需要调整的地方？</p>
+
+  <div class="options" style="margin-top: 12px;">
+    <div class="option" data-choice="ok" onclick="toggleSelect(this)">
+      <div class="letter">✓</div>
+      <div class="content">
+        <h3>OK，继续下一步</h3>
+        <p>整体结构没问题，后续细节再补</p>
+      </div>
+    </div>
+    <div class="option" data-choice="adjust" onclick="toggleSelect(this)">
+      <div class="letter">!</div>
+      <div class="content">
+        <h3>有些地方想调整</h3>
+        <p>我直接告诉你想法</p>
+      </div>
+    </div>
+  </div>
+</div>

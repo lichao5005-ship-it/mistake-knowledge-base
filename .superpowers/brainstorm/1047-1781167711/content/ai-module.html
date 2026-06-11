@@ -1,0 +1,161 @@
+<h2>AI 模块设计 — 识别 → 判错 → 分析 → 出题</h2>
+<p class="subtitle">全部由大模型视觉能力驱动，统一 AI 适配层</p>
+
+<div class="section">
+  <h3>架构策略：端到端大模型方案</h3>
+  <p>既然你选了 AI 方案，建议直接用 <strong>多模态大模型（GPT-4o / Claude Sonnet）</strong> 一次性完成"看到→理解→判断→分析"全流程，而非拆成传统 OCR → NLP → 规则的多阶段流水线。</p>
+</div>
+
+<div class="section">
+  <h3>AI 模块内部结构</h3>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin: 12px 0;">
+    <pre style="font-size: 13px; line-height: 1.6; margin: 0;">
+modules/ai/
+├── <b>ai_client.py</b>           # AI 统一适配层（支持切换模型）
+│   ├── call_ai(model, prompt, image) → 通用接口
+│   └── retry / fallback / token 统计
+│
+├── <b>ocr_service.py</b>        # 图片 → 结构化题目数据
+│   ├── extract_questions(image) → [{number, content, blank}]
+│   └── 处理：语文识字 / 数学公式 / 英语单词
+│
+├── <b>correction_service.py</b> # 判错引擎
+│   ├── check_answer(question, student_answer) → {correct, reason}
+│   └── 支持：填空题/选择题/计算题/应用题
+│
+├── <b>classify_service.py</b>   # 自动分类
+│   ├── classify_subject(text) → 语文/数学/英语
+│   ├── classify_knowledge_point(text) → 知识点ID
+│   └── classify_error_type(question, answer) → 错误类型
+│
+├── <b>generate_service.py</b>   # 出题引擎
+│   ├── generate_similar(question) → [similar_questions]
+│   └── generate_paper(subject, kps, count) → exam_paper
+│
+└── <b>analysis_service.py</b>   # 分析引擎
+    ├── analyze_weakness(mistakes) → weakness_report
+    └── generate_report(mistakes, period) → study_report</pre>
+  </div>
+</div>
+
+<div class="section">
+  <h3>一次完整的录入 = 3 步 AI 调用</h3>
+
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 200px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="background: #3498db; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px;">1</span>
+        <strong>OCR 识别</strong>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary);">发送裁剪后的图片给 AI</p>
+      <p style="font-size: 13px; color: var(--text-secondary);">返回 JSON：每道题的题号、题目内容、空白位置</p>
+      <p style="font-size: 12px; background: var(--bg); padding: 8px; border-radius: 4px; margin-top: 8px;">
+<em>"识别这张图片中的所有题目，按题号返回 JSON 格式，包含题目内容和空白/作答区域"</em></p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 200px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="background: #e67e22; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px;">2</span>
+        <strong>判错 + 分类</strong>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary);">对每道题，AI 判断对错</p>
+      <p style="font-size: 13px; color: var(--text-secondary);">标注错误类型，关联知识点</p>
+      <p style="font-size: 12px; background: var(--bg); padding: 8px; border-radius: 4px; margin-top: 8px;">
+<em>"题目内容：32×15，学生答：460。判断对错，分析错误原因，标注知识点"</em></p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 200px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="background: #27ae60; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px;">3</span>
+        <strong>正解分析</strong>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary);">AI 给出正确答案和解题思路</p>
+      <p style="font-size: 13px; color: var(--text-secondary);">特为小学生设计：用孩子能懂的语言解释</p>
+      <p style="font-size: 12px; background: var(--bg); padding: 8px; border-radius: 4px; margin-top: 8px;">
+<em>"用一年级学生能理解的方式，写出正确答案和解题步骤"</em></p>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <h3>三科特殊处理</h3>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin: 12px 0;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+      <tr style="border-bottom: 1px solid var(--border-color);">
+        <th style="padding: 8px; text-align: left; width: 80px;">科目</th>
+        <th style="padding: 8px; text-align: left;">识别难点</th>
+        <th style="padding: 8px; text-align: left;">应对策略</th>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border-color);">
+        <td style="padding: 8px;"><strong>语文</strong></td>
+        <td style="padding: 8px;">手写生字、阅读理解长文本、作文</td>
+        <td style="padding: 8px;">直接图片→AI，注重大量手写汉字识别精度</td>
+      </tr>
+      <tr style="border-bottom: 1px solid var(--border-color);">
+        <td style="padding: 8px;"><strong>数学</strong></td>
+        <td style="padding: 8px;">分数/除法竖式/几何图形/单位换算</td>
+        <td style="padding: 8px;">AI 理解图形语义，支持 LaTeX 格式输出公式</td>
+      </tr>
+      <tr>
+        <td style="padding: 8px;"><strong>英语</strong></td>
+        <td style="padding: 8px;">手写字母、选择题 ABCD</td>
+        <td style="padding: 8px;">相对简单，AI 直接处理</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="section">
+  <h3>出题 Prompt 策略</h3>
+
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 200px;">
+      <strong>相似题生成</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">基于原题知识点+难度，出 3 道同类题</p>
+      <p style="font-size: 12px; background: var(--bg); padding: 8px; border-radius: 4px; margin-top: 8px;">
+<em>原题是"32×15"，出 3 道两位数乘法的计算题，附答案和解题步骤</em></p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 200px;">
+      <strong>模拟卷生成</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">选择知识点和难易度，AI 组卷</p>
+      <p style="font-size: 12px; background: var(--bg); padding: 8px; border-radius: 4px; margin-top: 8px;">
+<em>数学三年级上册期中模拟卷，包含：填空 5 题、计算 4 题、应用 3 题，覆盖四则运算和长度单位</em></p>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <h3>关键设计原则</h3>
+  <ul>
+    <li><strong>结构化输出</strong> — AI 一律返回 JSON，前端直接渲染</li>
+    <li><strong>统一 AI 适配层</strong> — 所有模块调 <code>ai_client.call()</code>，换模型只改一处</li>
+    <li><strong>结果可修正</strong> — AI 识别结果允许家长在 PC 端手动编辑</li>
+    <li><strong>Prompt 模板管理</strong> — 每个场景的 prompt 存独立文件，方便调优</li>
+  </ul>
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+<div class="options" style="margin-top: 16px;">
+  <div class="option" data-choice="ok" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>AI 方案 OK</h3>
+      <p>继续下一模块</p>
+    </div>
+  </div>
+  <div class="option" data-choice="adjust" onclick="toggleSelect(this)">
+    <div class="letter">!</div>
+    <div class="content">
+      <h3>有想法想补充</h3>
+      <p>我直接说</p>
+    </div>
+  </div>
+</div>

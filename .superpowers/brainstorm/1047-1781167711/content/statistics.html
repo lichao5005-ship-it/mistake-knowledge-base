@@ -1,0 +1,99 @@
+<h2>统计功能设计 — 让进步看得见</h2>
+<p class="subtitle">围绕"薄弱点→趋势→行动"三个维度，家长一目了然</p>
+
+<div class="section">
+  <h3>统计大盘 — 概览页</h3>
+
+  <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 12px 0;">
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 600; color: var(--accent);">43</div>
+      <div style="font-size: 12px; color: var(--text-secondary);">累计错题</div>
+    </div>
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 600; color: #27ae60;">28</div>
+      <div style="font-size: 12px; color: var(--text-secondary);">已掌握</div>
+    </div>
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 600; color: #e67e22;">15</div>
+      <div style="font-size: 12px; color: var(--text-secondary);">待复习</div>
+    </div>
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; text-align: center;">
+      <div style="font-size: 28px; font-weight: 600; color: var(--accent);">76%</div>
+      <div style="font-size: 12px; color: var(--text-secondary);">本周正确率</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>六大统计视图</h3>
+
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <strong>📊 ① 三科正确率趋势（折线图）</strong>
+        <span style="font-size: 12px; color: var(--text-secondary);">近30天</span>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary);">每天做题的正确率变化，三科各一条线。家长一眼看出哪科在进步、哪科在退步。</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <strong>🎯 ② 薄弱知识点排行（柱状图）</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">按科目切换，展示出错最多的知识点 TOP 5。例如数学的"两位数乘法"错了 6 次、"长度单位换算"错了 4 次。每个知识点显示错题数量和掌握进度。</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <strong>🔍 ③ 错误类型分布（饼图）</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">错误分类统计：</p>
+      <div style="display: flex; gap: 16px; margin-top: 8px; font-size: 13px;">
+        <span>😅 <strong>粗心</strong> 35%</span>
+        <span>🤔 <strong>概念不清</strong> 30%</span>
+        <span>📖 <strong>审题错误</strong> 20%</span>
+        <span>🧮 <strong>计算错误</strong> 15%</span>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px;">不同类型的错误需要不同的应对策略，家长可以针对性辅导。</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <strong>📅 ④ 学习日历（热力图）</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">类似 GitHub 贡献图，每天做了多少题、正确率多少。绿色=全对，黄色=有错，红色=全错，灰色=没学。激励孩子保持连续学习。</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <strong>🔄 ⑤ 错题复做正确率</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">统计首次错题 → 复习后复做 → 相似题测试的"闭环完成率"。核心指标：错题是否真正掌握了。如果复做还是错，说明需要加强。</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <strong>📋 ⑥ 学习周报/月报（自动生成）</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">每周/每月 AI 自动生成一份学习报告，包含：各科正确率、进步最快的知识点、仍需努力的知识点、下周学习建议。家长可以直接看报告了解全局。</p>
+    </div>
+
+  </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+<div class="options" style="margin-top: 16px;">
+  <div class="option" data-choice="all" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>都要，你设计的很全</h3>
+      <p>这些统计有用</p>
+    </div>
+  </div>
+  <div class="option" data-choice="partial" onclick="toggleSelect(this)">
+    <div class="letter">!</div>
+    <div class="content">
+      <h3>选几个优先实现</h3>
+      <p>我告诉你哪些最需要</p>
+    </div>
+  </div>
+  <div class="option" data-choice="more" onclick="toggleSelect(this)">
+    <div class="letter">+</div>
+    <div class="content">
+      <h3>我补充一些想法</h3>
+      <p>还想加别的统计</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+<h2>录入流程 v2 — 加入裁剪步骤</h2>
+<p class="subtitle">拍照后先裁剪，再提交识别，避免多余题目混入</p>
+
+<div class="section">
+  <h3>更新后的手机端流程</h3>
+
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 140px;">
+      <div style="text-align: center; font-size: 32px; margin-bottom: 8px;">📱</div>
+      <strong>1. 扫码</strong>
+      <p style="color: var(--text-secondary); font-size: 13px;">扫码打开上传页</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 140px;">
+      <div style="text-align: center; font-size: 32px; margin-bottom: 8px;">📚</div>
+      <strong>2. 选科</strong>
+      <p style="color: var(--text-secondary); font-size: 13px;">语文/数学/英语</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 140px;">
+      <div style="text-align: center; font-size: 32px; margin-bottom: 8px;">📸</div>
+      <strong>3. 拍照</strong>
+      <p style="color: var(--text-secondary); font-size: 13px;">拍照或选相册图片</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 140px;">
+      <div style="text-align: center; font-size: 32px; margin-bottom: 8px;">✂️</div>
+      <strong style="color: var(--accent);">4. 裁剪</strong>
+      <p style="color: var(--text-secondary); font-size: 13px;">拖拽框选有效区域</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 140px;">
+      <div style="text-align: center; font-size: 32px; margin-bottom: 8px;">⏳</div>
+      <strong>5. AI 处理中</strong>
+      <p style="color: var(--text-secondary); font-size: 13px;">OCR + 判错 + 分析</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 140px;">
+      <div style="text-align: center; font-size: 32px; margin-bottom: 8px;">✅</div>
+      <strong>6. 完成</strong>
+      <p style="color: var(--text-secondary); font-size: 13px;">去 PC 端确认入库</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>裁剪交互设计</h3>
+  <p>手机上裁剪操作要简单直观：</p>
+  <ul>
+    <li>拍照后进入全屏裁剪页</li>
+    <li>默认自动识别边缘，框选出题区域</li>
+    <li>支持拖拽四个角和边框调整</li>
+    <li>支持 <strong>多次裁剪</strong> — 一张试卷可以切多次，每次框选一道题</li>
+    <li>裁剪完成后统一提交 AI 处理</li>
+  </ul>
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+<h3>流程完整了，接下来设计什么？</h3>
+<p>这几个大的设计模块，你想先看哪个？</p>
+
+<div class="options" style="margin-top: 12px;">
+  <div class="option" data-choice="frontend" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>前端页面结构</h3>
+      <p>PC 端和手机端的完整界面布局</p>
+    </div>
+  </div>
+  <div class="option" data-choice="ai" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>AI 模块设计</h3>
+      <p>OCR 识别策略、Prompt 设计、判错逻辑</p>
+    </div>
+  </div>
+  <div class="option" data-choice="review" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>孩子端复习与出题</h3>
+      <p>错题复习、相似题、模拟卷的交互设计</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+<h2>孩子端设计 — 错题复习与出题</h2>
+<p class="subtitle">孩子视角的交互设计，简单直观、游戏化激励</p>
+
+<div class="section">
+  <h3>孩子端入口</h3>
+  <p>PC 上切换角色，进入"孩子模式"——界面更简洁、字号更大、色彩更丰富</p>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin: 12px 0;">
+    <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+
+      <div style="flex: 1; min-width: 120px; background: var(--bg); border-radius: 8px; padding: 16px; text-align: center;">
+        <div style="font-size: 32px;">📘</div>
+        <div style="font-size: 18px; font-weight: 600; margin: 8px 0;">语文</div>
+        <div style="font-size: 13px; color: var(--text-secondary);">错题 12 道</div>
+        <div style="margin-top: 8px; font-size: 12px;">
+          <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 8px;">3 道待复习</span>
+        </div>
+      </div>
+
+      <div style="flex: 1; min-width: 120px; background: var(--bg); border-radius: 8px; padding: 16px; text-align: center;">
+        <div style="font-size: 32px;">🧮</div>
+        <div style="font-size: 18px; font-weight: 600; margin: 8px 0;">数学</div>
+        <div style="font-size: 13px; color: var(--text-secondary);">错题 23 道</div>
+        <div style="margin-top: 8px; font-size: 12px;">
+          <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 8px;">8 道待复习</span>
+        </div>
+      </div>
+
+      <div style="flex: 1; min-width: 120px; background: var(--bg); border-radius: 8px; padding: 16px; text-align: center;">
+        <div style="font-size: 32px;">🔤</div>
+        <div style="font-size: 18px; font-weight: 600; margin: 8px 0;">英语</div>
+        <div style="font-size: 13px; color: var(--text-secondary);">错题 8 道</div>
+        <div style="margin-top: 8px; font-size: 12px;">
+          <span style="background: #27ae60; color: white; padding: 2px 8px; border-radius: 8px;">已复习完 ✓</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>复习模式 — 两种方式</h3>
+
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 240px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="font-size: 24px;">🎯</span>
+        <strong>逐题复习</strong>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary);">每次展示一道错题：</p>
+      <ul style="font-size: 13px; color: var(--text-secondary);">
+        <li>显示原题</li>
+        <li>孩子作答</li>
+        <li>AI 给出判断和正解</li>
+        <li>显示解题思路（孩子能懂的语言）</li>
+        <li>→ 下一题</li>
+      </ul>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 240px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="font-size: 24px;">✍️</span>
+        <strong>做题模式</strong>
+      </div>
+      <p style="font-size: 13px; color: var(--text-secondary);">把错题当新题重做一遍：</p>
+      <ul style="font-size: 13px; color: var(--text-secondary);">
+        <li>隐藏答案，只看题目</li>
+        <li>孩子输入答案</li>
+        <li>AI 再次判对错</li>
+        <li>做对了标记"已掌握"，减少出现频率</li>
+        <li>做错了加强标记</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <h3>相似题与模拟卷</h3>
+
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 200px;">
+      <strong>📋 相似题挑战</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">做完一道错题复习 → 点"再来一题" → AI 立刻生成同类题 → 孩子当场巩固</p>
+    </div>
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 200px;">
+      <strong>📝 模拟测验</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">家长在 PC 端组卷完成后 → 孩子端出现"有新的试卷"提示 → 孩子打开做题 → AI 自动批改</p>
+    </div>
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 200px;">
+      <strong>🔄 错题重做</strong>
+      <p style="font-size: 13px; color: var(--text-secondary);">把某段时间内的所有错题打包成一张"重做卷"，检验是否真正掌握了</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>学习激励 — 游戏化元素</h3>
+  <p style="font-size: 13px; color: var(--text-secondary);">小学阶段，适当的激励能保持学习动力：</p>
+  <ul>
+    <li><strong>连续打卡</strong> — 每天复习得星星，连续 7 天得额外奖励</li>
+    <li><strong>错题清零进度条</strong> — "今天的 3 道错题已搞定 2 道！"</li>
+    <li><strong>掌握等级</strong> — 某个知识点从"待加强"→"已掌握"→"小达人"</li>
+  </ul>
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+<div class="options" style="margin-top: 16px;">
+  <div class="option" data-choice="ok" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>复习设计 OK</h3>
+      <p>符合我对孩子端的想法</p>
+    </div>
+  </div>
+  <div class="option" data-choice="adjust" onclick="toggleSelect(this)">
+    <div class="letter">!</div>
+    <div class="content">
+      <h3>想调整/补充</h3>
+      <p>我直接说</p>
+    </div>
+  </div>
+</div>

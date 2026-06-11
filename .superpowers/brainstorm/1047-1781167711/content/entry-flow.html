@@ -1,0 +1,151 @@
+<h2>录入流程设计 — 手机扫码 → 入库</h2>
+<p class="subtitle">这是最核心的用户旅程：家长从拍照到错题入库，一气呵成</p>
+
+<div class="section">
+  <h3>完整流程</h3>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin: 12px 0;">
+    <div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;">
+
+      <div style="flex: 1; min-width: 180px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">1</span>
+          <strong>PC 端生成二维码</strong>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 13px; margin-left: 32px;">打开网页 → 点击上传 → 显示带 session 的二维码</p>
+      </div>
+
+      <div style="flex: 1; min-width: 180px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">2</span>
+          <strong>手机扫码</strong>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 13px; margin-left: 32px;">手机打开页面，选择科目 → 拍照/选图</p>
+      </div>
+
+      <div style="flex: 1; min-width: 180px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">3</span>
+          <strong>AI 自动处理</strong>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 13px; margin-left: 32px;">OCR 识别 → 逐题拆解 → AI 判错 → 分析错误原因</p>
+      </div>
+
+      <div style="flex: 1; min-width: 180px;">
+        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+          <span style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600;">4</span>
+          <strong>确认入库</strong>
+        </div>
+        <p style="color: var(--text-secondary); font-size: 13px; margin-left: 32px;">PC 端展示结果 → 家长确认/修正 → 一键入库</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>手机端页面流程</h3>
+
+  <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 160px;">
+      <div style="text-align: center;">
+        <div style="background: var(--bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 8px; font-size: 32px;">📱</div>
+      </div>
+      <strong>1. 选科页</strong>
+      <p style="color: var(--text-secondary); font-size: 13px;">扫码后进入，三个大按钮：语文 / 数学 / 英语</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 160px;">
+      <div style="text-align: center;">
+        <div style="background: var(--bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 8px; font-size: 32px;">📸</div>
+      </div>
+      <strong>2. 拍照页</strong>
+      <p style="color: var(--text-secondary); font-size: 13px;">拍照 / 选图，支持连拍（多页试卷）</p>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 160px;">
+      <div style="text-align: center;">
+        <div style="background: var(--bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 8px; font-size: 32px;">⏳</div>
+      </div>
+      <strong>3. 处理中</strong>
+      <p style="color: var(--text-secondary); font-size: 13px;">显示上传进度、识别进度（可关闭，后台继续）</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>PC 端确认页面</h3>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin: 12px 0;">
+    <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+      <span><strong>📐 数学 — 2024.06.11 试卷</strong></span>
+      <span style="background: var(--accent); color: var(--bg); padding: 4px 12px; border-radius: 12px; font-size: 12px;">共 8 题，已识别 8/8</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="background: var(--bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; gap: 12px;">
+        <span style="background: #e74c3c; width: 6px; height: 6px; border-radius: 50%;"></span>
+        <span style="font-size: 13px; min-width: 24px; color: var(--text-secondary);">#1</span>
+        <span style="flex: 1; font-size: 13px;">32 × 15 = ?</span>
+        <span style="color: var(--text-secondary); font-size: 12px;">学生答: 460</span>
+        <span style="color: var(--accent); font-size: 12px;">正解: 480</span>
+        <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 8px; font-size: 11px;">计算错误</span>
+      </div>
+
+      <div style="background: var(--bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; gap: 12px;">
+        <span style="background: #27ae60; width: 6px; height: 6px; border-radius: 50%;"></span>
+        <span style="font-size: 13px; min-width: 24px; color: var(--text-secondary);">#2</span>
+        <span style="flex: 1; font-size: 13px;">一块蛋糕 12 元，买 5 块需要多少钱？</span>
+        <span style="color: var(--text-secondary); font-size: 12px;">学生答: 60</span>
+        <span style="color: var(--accent); font-size: 12px;">✓</span>
+        <span style="background: #27ae60; color: white; padding: 2px 8px; border-radius: 8px; font-size: 11px;">正确</span>
+      </div>
+
+      <div style="background: var(--bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 8px 12px; display: flex; align-items: center; gap: 12px;">
+        <span style="background: #e67e22; width: 6px; height: 6px; border-radius: 50%;"></span>
+        <span style="font-size: 13px; min-width: 24px; color: var(--text-secondary);">#3</span>
+        <span style="flex: 1; font-size: 13px;">456 ÷ 3 = ?</span>
+        <span style="color: var(--text-secondary); font-size: 12px;">未作答</span>
+        <span style="color: var(--accent); font-size: 12px;">正解: 152</span>
+        <span style="background: #e67e22; color: white; padding: 2px 8px; border-radius: 8px; font-size: 11px;">未作答</span>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px;">
+      <button class="mock-button" style="background: var(--bg); color: var(--text);">编辑</button>
+      <button class="mock-button" style="background: var(--accent); color: var(--bg);">确认入库 (8题)</button>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>这页展示了：</h3>
+  <ul>
+    <li><strong>逐题识别</strong> — AI 自动将试卷拆成单道题</li>
+    <li><strong>AI 判错</strong> — 对比学生答案和标准答案，标出对/错/未作答</li>
+    <li><strong>错误分类</strong> — 标注错误类型（计算错误/概念不清/审题/粗心…）</li>
+    <li><strong>确认入库</strong> — 家长审核后一键入库</li>
+    <li><strong>正解分析</strong> — AI 自动给出正解和解题思路</li>
+  </ul>
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+<div class="options" style="margin-top: 16px;">
+  <div class="option" data-choice="ok" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>流程 OK</h3>
+      <p>符合预期，继续</p>
+    </div>
+  </div>
+  <div class="option" data-choice="adjust" onclick="toggleSelect(this)">
+    <div class="letter">!</div>
+    <div class="content">
+      <h3>想调整</h3>
+      <p>有些细节想改</p>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top: 16px; color: var(--text-secondary);">打开浏览器看看录入流程和确认页面，看看是否符合你的想法。</p>

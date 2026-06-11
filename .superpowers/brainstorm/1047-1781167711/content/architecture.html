@@ -1,0 +1,143 @@
+<h2>推荐架构方案对比</h2>
+<p class="subtitle">基于你的需求：模块独立、数据库解耦、易于扩展</p>
+
+<div class="section">
+  <h3>方案 A：Python 模块化单体（推荐）</h3>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin: 12px 0;">
+    <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+      <span style="background: var(--accent); color: var(--bg); padding: 2px 10px; border-radius: 12px; font-size: 12px;">后端：FastAPI</span>
+      <span style="background: var(--accent); color: var(--bg); padding: 2px 10px; border-radius: 12px; font-size: 12px;">前端：Vue 3</span>
+      <span style="background: var(--accent); color: var(--bg); padding: 2px 10px; border-radius: 12px; font-size: 12px;">数据库：SQLite → PostgreSQL</span>
+      <span style="background: var(--accent); color: var(--bg); padding: 2px 10px; border-radius: 12px; font-size: 12px;">ORM：SQLAlchemy</span>
+    </div>
+
+    <div style="margin: 12px 0;">
+      <strong>模块结构：</strong>
+      <pre style="background: var(--card-bg); padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.6; margin-top: 8px;">
+mistake-book/
+├── modules/                    # 各独立模块
+│   ├── auth/                   # 认证模块（扫码登录）
+│   │   ├── router.py           #   API 路由
+│   │   ├── service.py          #   业务逻辑
+│   │   └── models.py           #   本模块数据库表
+│   ├── upload/                 # 上传模块（图片/PDF/Word）
+│   │   ├── router.py
+│   │   ├── service.py
+│   │   └── models.py
+│   ├── ocr/                    # OCR 识别模块
+│   │   ├── router.py
+│   │   ├── service.py          #   调用 AI API
+│   │   └── models.py
+│   ├── question/               # 题库模块（错题管理）
+│   │   ├── router.py
+│   │   ├── service.py
+│   │   └── models.py
+│   ├── generate/               # 出题模块（相似题/模拟卷）
+│   │   ├── router.py
+│   │   ├── service.py          #   调用 AI 生成
+│   │   └── models.py
+│   ├── analysis/               # 分析模块（出错点分析）
+│   │   ├── router.py
+│   │   ├── service.py
+│   │   └── models.py
+│   └── knowledge/              # 知识点模块（共享）
+│       ├── router.py
+│       ├── service.py
+│       └── models.py
+├── shared/                     # 共享基础设施
+│   ├── database.py             #   数据库引擎（独立）
+│   ├── config.py               #   全局配置
+│   └── ai_client.py            #   AI API 客户端
+└── frontend/                   # Vue 3 前端（独立）
+    └── src/
+</pre>
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <h4>优势</h4>
+        <ul>
+          <li><strong>模块高度独立</strong> — 每个模块有自己的一套 router + service + models，修改一个模块不影响其他</li>
+          <li><strong>数据库按模块拆分</strong> — 每个模块的 models.py 只定义自己的表，共享数据放 shared/</li>
+          <li><strong>未来可拆微服务</strong> — 把某个 module 整个拎出去变成独立服务，改几行路由前缀即可</li>
+          <li><strong>Python AI 生态</strong> — 调用 Claude/GPT API、PDF 解析、图片处理最方便</li>
+          <li><strong>SQLite 起步</strong> — 本地开发零配置，需要时可以无缝切到 PostgreSQL</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <h4>注意点</h4>
+        <ul>
+          <li>Vue 前端需要一点前端开发量</li>
+          <li>相比全栈 JS，前后端之间多一层 API 规范</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>方案 B：全栈 TypeScript（NestJS + Next.js）</h3>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin: 12px 0;">
+    <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+      <span style="background: var(--accent); color: var(--bg); padding: 2px 10px; border-radius: 12px; font-size: 12px;">后端：NestJS</span>
+      <span style="background: var(--accent); color: var(--bg); padding: 2px 10px; border-radius: 12px; font-size: 12px;">前端：Next.js</span>
+      <span style="background: var(--accent); color: var(--bg); padding: 2px 10px; border-radius: 12px; font-size: 12px;">语言：TypeScript 统一</span>
+      <span style="background: var(--accent); color: var(--bg); padding: 2px 10px; border-radius: 12px; font-size: 12px;">ORM：Prisma</span>
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <h4>优势</h4>
+        <ul>
+          <li>前后端同语言，类型共享</li>
+          <li>NestJS 模块系统本来就是模块化设计</li>
+          <li>Next.js 前端 SSR，体验好</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <h4>注意点</h4>
+        <ul>
+          <li>调 AI API 需要额外封装（Python 生态更直接）</li>
+          <li>OCR/PDF 处理在 JS 生态中相对薄弱</li>
+          <li>对不熟悉前端的人来说配置项较多</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; margin: 24px 0;">
+  <h3>我的推荐：方案 A — Python 模块化架构</h3>
+  <p>理由：你的核心业务（OCR、AI 判错、AI 出题、分析）全部依赖 AI/LLM 能力，Python 是这方面生态最成熟的语言，开发效率最高。FastAPI 原生支持模块化拆分，数据库按模块独立设计，后续扩展非常清晰。</p>
+  <p>前端用 Vue 3 做一个独立的 SPA，通过 API 和后端通信，将来前端也可以拆成独立项目。</p>
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+<div class="options" style="margin-top: 16px;">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>方案 A：Python 模块化架构</h3>
+      <p>FastAPI + Vue 3 + 独立模块设计</p>
+    </div>
+  </div>
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>方案 B：全栈 TypeScript</h3>
+      <p>NestJS + Next.js + Prisma</p>
+    </div>
+  </div>
+  <div class="option" data-choice="custom" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>你自由搭配</h3>
+      <p>比如 Python 后端 + 简单的 HTML/JS 前端，怎么简单怎么来</p>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top: 16px; color: var(--text-secondary);">浏览器里看看模块结构图，选一个你倾向的方向，然后我们继续细化设计。</p>

@@ -1,0 +1,141 @@
+<h2>前端页面结构 — PC 端</h2>
+<p class="subtitle">家长管理为主，布局清晰，信息密度适中</p>
+
+<div class="section">
+  <h3>全局导航</h3>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px;">
+    <div style="display: flex; gap: 24px; align-items: center;">
+      <span style="font-weight: 600; font-size: 16px;">📘 错题本</span>
+      <span style="color: var(--text-secondary);">|</span>
+      <span style="color: var(--accent); font-weight: 500;">📥 录入</span>
+      <span style="color: var(--text-secondary);">📖 错题集</span>
+      <span style="color: var(--text-secondary);">📝 出题</span>
+      <span style="color: var(--text-secondary);">📊 分析</span>
+      <span style="color: var(--text-secondary);">⚙️ 设置</span>
+      <span style="margin-left: auto; color: var(--text-secondary); font-size: 13px;">👤 家长</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>主要页面</h3>
+
+  <div style="display: flex; flex-direction: column; gap: 16px;">
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px;">1</span>
+        <strong>📥 录入页 /upload</strong>
+      </div>
+      <ul style="margin: 0; font-size: 13px; color: var(--text-secondary);">
+        <li>显示二维码（供手机扫码）</li>
+        <li>实时显示手机上传的文件列表（文件名、科目、状态）</li>
+        <li>每份文件的操作：查看详情、删除、重新识别</li>
+        <li>传统上传入口：拖拽上传 / 选择文件（PDF/Word/图片）</li>
+      </ul>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px;">2</span>
+        <strong>✅ 确认入库页 /confirm/:session_id</strong>
+      </div>
+      <ul style="margin: 0; font-size: 13px; color: var(--text-secondary);">
+        <li>展示 AI 识别和判错结果（之前展示的那种列表）</li>
+        <li>每题可点开编辑：修改题目内容、答案、错误类型</li>
+        <li>底部：确认入库按钮</li>
+      </ul>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px;">3</span>
+        <strong>📖 错题集页 /questions</strong>
+      </div>
+      <ul style="margin: 0; font-size: 13px; color: var(--text-secondary);">
+        <li>按科目切换（语文 / 数学 / 英语 tab）</li>
+        <li>筛选：知识点、错误类型、日期范围、难易度</li>
+        <li>列表模式 / 卡片模式切换</li>
+        <li>点击题目展开详情：原题、学生答案、正解、AI 分析</li>
+        <li>批量操作：选中多题加入试卷、导出</li>
+      </ul>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px;">4</span>
+        <strong>📝 出题页 /generate</strong>
+      </div>
+      <ul style="margin: 0; font-size: 13px; color: var(--text-secondary);">
+        <li>两个子功能：<strong>相似题生成</strong>（选一道错题 → AI 出同类题）</li>
+        <li><strong>模拟卷生成</strong>（选科目/知识点/题量 → AI 自动组卷）</li>
+        <li>历史试卷列表</li>
+      </ul>
+    </div>
+
+    <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+        <span style="background: var(--accent); color: var(--bg); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px;">5</span>
+        <strong>📊 分析页 /analysis</strong>
+      </div>
+      <ul style="margin: 0; font-size: 13px; color: var(--text-secondary);">
+        <li>按科目查看出错点分布（柱状图/饼图）</li>
+        <li>薄弱知识点排行</li>
+        <li>错误类型统计（粗心 vs 概念不清 vs 计算错误…）</li>
+        <li>学习周报/月报</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+<h3>手机端页面</h3>
+<p class="subtitle">轻量级，只在拍照录入时使用</p>
+
+<div style="display: flex; gap: 16px; flex-wrap: wrap;">
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 160px;">
+    <strong>/scan</strong>
+    <p style="color: var(--text-secondary); font-size: 13px;">扫码页 → 打开相机扫码</p>
+  </div>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 160px;">
+    <strong>/upload</strong>
+    <p style="color: var(--text-secondary); font-size: 13px;">选科 → 拍照/选图 → 裁剪 → 提交</p>
+  </div>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 160px;">
+    <strong>/processing</strong>
+    <p style="color: var(--text-secondary); font-size: 13px;">处理中页面 → 进度显示</p>
+  </div>
+
+  <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; flex: 1; min-width: 160px;">
+    <strong>/done</strong>
+    <p style="color: var(--text-secondary); font-size: 13px;">完成页 → 提示去 PC 确认</p>
+  </div>
+
+</div>
+
+<hr style="border: none; border-top: 1px solid var(--border-color); margin: 24px 0;">
+
+<div class="options" style="margin-top: 16px;">
+  <div class="option" data-choice="ok" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>OK，页面结构没问题</h3>
+      <p>继续 AI 模块设计</p>
+    </div>
+  </div>
+  <div class="option" data-choice="adjust" onclick="toggleSelect(this)">
+    <div class="letter">!</div>
+    <div class="content">
+      <h3>想调整</h3>
+      <p>我直接说想法</p>
+    </div>
+  </div>
+</div>
+
+<p style="margin-top: 16px; color: var(--text-secondary);">浏览器里有 PC 端 5 个主要页面和手机端流程的布局设计，看看是否符合你对产品形态的想象。</p>
