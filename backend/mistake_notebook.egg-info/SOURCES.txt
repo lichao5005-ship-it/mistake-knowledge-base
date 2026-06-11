@@ -1,0 +1,12 @@
+pyproject.toml
+app/__init__.py
+app/main.py
+app/shared/__init__.py
+app/shared/ai_client.py
+app/shared/config.py
+app/shared/database.py
+mistake_notebook.egg-info/PKG-INFO
+mistake_notebook.egg-info/SOURCES.txt
+mistake_notebook.egg-info/dependency_links.txt
+mistake_notebook.egg-info/requires.txt
+mistake_notebook.egg-info/top_level.txt
