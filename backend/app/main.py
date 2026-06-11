@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from app.shared.database import SessionLocal, init_db
+from app.modules.auth.router import router as auth_router
 from app.modules.knowledge.router import router as knowledge_router
 
 app = FastAPI(title="错题本", version="0.1.0")
@@ -22,6 +23,7 @@ static_dir.mkdir(parents=True, exist_ok=True)
 app.mount("/static", StaticFiles(directory=str(static_dir.parent)), name="static")
 
 app.include_router(knowledge_router)
+app.include_router(auth_router)
 
 
 @app.on_event("startup")
